@@ -1,0 +1,6 @@
+Android libs for EasyRPG
+
+1. Invoke "ndk-build"
+2. Copy the .a libs from obj/local/armeabi-v7a to libs/armeabi-v7a
+3. Set environment variable EASYDEV_ANDROID to this directory (the one where the README is you read)
+4. Place boost header in include/boost
