@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := main
 
-SDL_PATH := ../SDL2-2.0.1
+SDL_PATH := ../SDL2-2.0.3
 SDL_MIXER_PATH := ../SDL2_mixer-2.0.0
 
 LOCAL_CPP_EXTENSION := .cxx .cpp
