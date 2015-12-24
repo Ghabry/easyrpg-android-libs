@@ -127,8 +127,7 @@ cd SDL_mixer
 patch -Np1 -d timidity < ../timidity-android.patch
 sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
 sh autogen.sh
-./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest
-sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
 # Binaries do not compile correctly
 make install-hdrs
@@ -173,7 +172,7 @@ cd $WORKSPACE
 
 export PATH=$OLD_PATH
 export PLATFORM_PREFIX=$WORKSPACE/arm-toolchain
-#$NDK_ROOT/build/tools/make-standalone-toolchain.sh --platform=android-9 --ndk-dir=$NDK_ROOT --toolchain=arm-linux-androideabi-4.9 --install-dir=$PLATFORM_PREFIX  --stl=gnustl
+$NDK_ROOT/build/tools/make-standalone-toolchain.sh --platform=android-9 --ndk-dir=$NDK_ROOT --toolchain=arm-linux-androideabi-4.9 --install-dir=$PLATFORM_PREFIX  --stl=gnustl
 export PATH=$PLATFORM_PREFIX/bin:$PATH
 
 export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/android/support/include -I$NDK_ROOT/sources/android/cpufeatures"
