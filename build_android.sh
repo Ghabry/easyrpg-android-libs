@@ -126,12 +126,11 @@ hg clone http://hg.libsdl.org/SDL_mixer
 cd SDL_mixer
 patch -Np1 -d timidity < ../timidity-android.patch
 sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
+sed -i.bak 's/^all:.*$/all: $(srcdir)\/configure Makefile $(objects) $(objects)\/$(TARGET)/' Makefile.in
 sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
-# Binaries do not compile correctly
-make install-hdrs
-make install-lib
+make install
 cd ..
 
 # Install ICU
@@ -253,9 +252,7 @@ sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release
 sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
-# Binaries do not compile correctly
-make install-hdrs
-make install-lib
+make install
 cd ..
 
 # Cross compile ICU
