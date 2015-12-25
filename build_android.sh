@@ -118,7 +118,7 @@ cd SDL
 mv include/SDL_config_android.h include/SDL_config.h
 mkdir jni
 echo "APP_STL := gnustl_static" > "jni/Application.mk"
-echo "APP_ABI := armeabi-v7a x86" >> "jni/Application.mk"
+echo "APP_ABI := armeabi armeabi-v7a x86 mips" >> "jni/Application.mk"
 ndk-build NDK_PROJECT_PATH=. APP_BUILD_SCRIPT=./Android.mk APP_PLATFORM=android-9
 cp libs/x86/* $PLATFORM_PREFIX/lib/
 cp include/* $PLATFORM_PREFIX/include/
@@ -133,6 +133,7 @@ sed -i.bak 's/^all:.*$/all: $(srcdir)\/configure Makefile $(objects) $(objects)\
 sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
+touch build/.libs/libSDL2_mixer.lai
 make install
 cd ..
 
@@ -173,11 +174,112 @@ unset LDFLAGS
 cd $WORKSPACE
 
 export PATH=$OLD_PATH
-export PLATFORM_PREFIX=$WORKSPACE/arm-toolchain
+export PLATFORM_PREFIX=$WORKSPACE/armeabi-toolchain
 $NDK_ROOT/build/tools/make-standalone-toolchain.sh --platform=android-9 --ndk-dir=$NDK_ROOT --toolchain=arm-linux-androideabi-4.9 --install-dir=$PLATFORM_PREFIX  --stl=gnustl
 export PATH=$PLATFORM_PREFIX/bin:$PATH
 
 export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/android/support/include -I$NDK_ROOT/sources/android/cpufeatures"
+export LDFLAGS="-L$PLATFORM_PREFIX/lib"
+export PKG_CONFIG_PATH=$PLATFORM_PREFIX/lib/pkgconfig
+export TARGET_HOST="arm-linux-androideabi"
+
+# Install boost header
+cp -r boost_1_60_0/boost/ $PLATFORM_PREFIX/include/boost/
+
+# Install libpng
+cd libpng-1.6.20
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install freetype
+cd freetype-2.6
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static --with-harfbuzz=no
+make -j2
+make install
+cd ..
+
+# Install pixman
+cd pixman-0.32.8
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libogg
+cd libogg-1.3.2
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libvorbis
+cd libvorbis-1.3.5
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libmad
+cd libmad-0.15.1b
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libmodplug
+cd libmodplug-0.8.8.5
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install SDL2
+cd SDL
+# Was already compiled because of Android.mk voodoo
+cp libs/armeabi/* $PLATFORM_PREFIX/lib/
+cp include/* $PLATFORM_PREFIX/include/
+cd ..
+
+# Install SDL2_mixer
+cd SDL_mixer
+make clean
+sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
+sh autogen.sh
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
+make -j2
+touch build/.libs/libSDL2_mixer.lai
+make install
+cd ..
+
+# Cross compile ICU
+cd icu/source
+
+export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/cxx-stl/stlport/stlport -O3 -fno-short-wchar -DU_USING_ICU_NAMESPACE=0 -DU_GNUC_UTF16_STRING=0 -fno-short-enums -nostdlib"
+export LDFLAGS="-lc -Wl,-rpath-link=$PLATFORM_PREFIX/lib -L$PLATFORM_PREFIX/lib/"
+
+chmod u+x configure
+make clean
+./configure --with-cross-build=$ICU_CROSS_BUILD --enable-strict=no  --enable-static --enable-shared=no --enable-tests=no --enable-samples=no --enable-dyload=no --enable-tools=no --enable-extras=no --enable-icuio=no --host=$TARGET_HOST --with-data-packaging=static --prefix=$PLATFORM_PREFIX
+
+make -j2
+make install
+
+################################################################
+# Install standalone toolchain ARM
+cd $WORKSPACE
+
+# Setting up new toolchain not required, only difference is CPPFLAGS
+
+export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/android/support/include -I$NDK_ROOT/sources/android/cpufeatures -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3"
 export LDFLAGS="-L$PLATFORM_PREFIX/lib"
 export PKG_CONFIG_PATH=$PLATFORM_PREFIX/lib/pkgconfig
 export TARGET_HOST="arm-linux-androideabi"
@@ -255,6 +357,111 @@ sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release
 sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
+touch build/.libs/libSDL2_mixer.lai
+make install
+cd ..
+
+# Cross compile ICU
+cd icu/source
+
+export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/cxx-stl/stlport/stlport -O3 -fno-short-wchar -DU_USING_ICU_NAMESPACE=0 -DU_GNUC_UTF16_STRING=0 -fno-short-enums -nostdlib -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3"
+export LDFLAGS="-lc -Wl,-rpath-link=$PLATFORM_PREFIX/lib -L$PLATFORM_PREFIX/lib/"
+
+chmod u+x configure
+make clean
+./configure --with-cross-build=$ICU_CROSS_BUILD --enable-strict=no  --enable-static --enable-shared=no --enable-tests=no --enable-samples=no --enable-dyload=no --enable-tools=no --enable-extras=no --enable-icuio=no --host=$TARGET_HOST --with-data-packaging=static --prefix=$PLATFORM_PREFIX
+
+make -j2
+make install
+
+################################################################
+# Install standalone toolchain MIPS
+cd $WORKSPACE
+
+export PATH=$OLD_PATH
+export PLATFORM_PREFIX=$WORKSPACE/mips-toolchain
+$NDK_ROOT/build/tools/make-standalone-toolchain.sh --platform=android-9 --ndk-dir=$NDK_ROOT --toolchain=mipsel-linux-android-4.9 --install-dir=$PLATFORM_PREFIX  --stl=gnustl
+export PATH=$PLATFORM_PREFIX/bin:$PATH
+
+export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/android/support/include -I$NDK_ROOT/sources/android/cpufeatures"
+export LDFLAGS="-L$PLATFORM_PREFIX/lib"
+export PKG_CONFIG_PATH=$PLATFORM_PREFIX/lib/pkgconfig
+export TARGET_HOST="mipsel-linux-android"
+
+# Install boost header
+cp -r boost_1_60_0/boost/ $PLATFORM_PREFIX/include/boost/
+
+# Install libpng
+cd libpng-1.6.20
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install freetype
+cd freetype-2.6
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static --with-harfbuzz=no
+make -j2
+make install
+cd ..
+
+# Install pixman
+cd pixman-0.32.8
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libogg
+cd libogg-1.3.2
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libvorbis
+cd libvorbis-1.3.5
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libmad
+cd libmad-0.15.1b
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install libmodplug
+cd libmodplug-0.8.8.5
+make clean
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+make -j2
+make install
+cd ..
+
+# Install SDL2
+cd SDL
+# Was already compiled because of Android.mk voodoo
+cp libs/mips/* $PLATFORM_PREFIX/lib/
+cp include/* $PLATFORM_PREFIX/include/
+cd ..
+
+# Install SDL2_mixer
+cd SDL_mixer
+make clean
+sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
+sh autogen.sh
+./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
+make -j2
+touch build/.libs/libSDL2_mixer.lai
 make install
 cd ..
 
