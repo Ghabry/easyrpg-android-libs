@@ -284,6 +284,7 @@ export PKG_CONFIG_PATH=$PLATFORM_PREFIX/lib/pkgconfig
 export TARGET_HOST="arm-linux-androideabi"
 
 # Install boost header
+mkdir $PLATFORM_PREFIX/include
 cp -r boost_1_60_0/boost/ $PLATFORM_PREFIX/include/boost/
 
 # Install libpng
@@ -430,7 +431,7 @@ cd ..
 # Install libmad
 cd libmad-0.15.1b
 make clean
-./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
+FPM="-DFPM_DEFAULT" ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
 make install
 cd ..
