@@ -128,12 +128,10 @@ cd ..
 hg clone http://hg.libsdl.org/SDL_mixer
 cd SDL_mixer
 patch -Np1 -d timidity < ../timidity-android.patch
-sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
-sed -i.bak 's/^all:.*$/all: $(srcdir)\/configure Makefile $(objects) $(objects)\/$(TARGET)/' Makefile.in
+patch -Np0 < ../sdl-mixer-config.patch
 sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
-touch build/.libs/libSDL2_mixer.lai
 make install
 cd ..
 
@@ -252,11 +250,8 @@ cd ..
 # Install SDL2_mixer
 cd SDL_mixer
 make clean
-sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
-sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
-touch build/.libs/libSDL2_mixer.lai
 make install
 cd ..
 
@@ -353,11 +348,8 @@ cd ..
 # Install SDL2_mixer
 cd SDL_mixer
 make clean
-sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
-sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
-touch build/.libs/libSDL2_mixer.lai
 make install
 cd ..
 
@@ -457,11 +449,8 @@ cd ..
 # Install SDL2_mixer
 cd SDL_mixer
 make clean
-sed -i.bak 's/LT_LDFLAGS.*$/LT_LDFLAGS = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -avoid-version/' Makefile.in
-sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
-touch build/.libs/libSDL2_mixer.lai
 make install
 cd ..
 
