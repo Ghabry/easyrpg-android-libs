@@ -130,6 +130,7 @@ cd SDL_mixer
 patch -Np1 -d timidity < ../timidity-android.patch
 patch -Np0 < ../sdl-mixer-config.patch
 sh autogen.sh
+sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
 make install
