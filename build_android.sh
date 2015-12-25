@@ -10,6 +10,9 @@ wget http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin
 7z x android-ndk-r10e-linux-x86_64.bin
 rm android-ndk-r10e-linux-x86_64.bin
 
+# Patch cpufeatures, hangs in Android 4.0.3
+patch -Np0 < cpufeatures.patch
+
 # Setup PATH
 PATH=$PATH:$WORKSPACE/android-ndk-r10e:$WORKSPACE/android-sdk-linux/tools
 
