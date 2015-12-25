@@ -172,7 +172,7 @@ unset LDFLAGS
 cd $WORKSPACE
 
 export PATH=$OLD_PATH
-export PLATFORM_PREFIX=$WORKSPACE/arm-toolchain
+export PLATFORM_PREFIX=$WORKSPACE/armeabi-toolchain
 $NDK_ROOT/build/tools/make-standalone-toolchain.sh --platform=android-9 --ndk-dir=$NDK_ROOT --toolchain=arm-linux-androideabi-4.9 --install-dir=$PLATFORM_PREFIX  --stl=gnustl
 export PATH=$PLATFORM_PREFIX/bin:$PATH
 
@@ -274,8 +274,11 @@ cd $WORKSPACE
 
 # Setting up new toolchain not required, only difference is CPPFLAGS
 
-export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/android/support/include -I$NDK_ROOT/sources/android/cpufeatures -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3"
-export LDFLAGS="-L$PLATFORM_PREFIX/lib"
+export PLATFORM_PREFIX_ARM=$WORKSPACE/armeabi-toolchain
+export PLATFORM_PREFIX=$WORKSPACE/armeabi-v7a-toolchain
+
+export CPPFLAGS="-I$PLATFORM_PREFIX_ARM/include -I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/android/support/include -I$NDK_ROOT/sources/android/cpufeatures -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3"
+export LDFLAGS="-L$PLATFORM_PREFIX_ARM/lib -L$PLATFORM_PREFIX/lib"
 export PKG_CONFIG_PATH=$PLATFORM_PREFIX/lib/pkgconfig
 export TARGET_HOST="arm-linux-androideabi"
 
