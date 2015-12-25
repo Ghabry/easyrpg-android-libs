@@ -170,11 +170,11 @@ unset CPPFLAGS
 unset LDFLAGS
 
 ################################################################
-# Install standalone toolchain ARM
+# Install standalone toolchain ARMeabi
 cd $WORKSPACE
 
 export PATH=$OLD_PATH
-export PLATFORM_PREFIX=$WORKSPACE/armeabi-toolchain
+export PLATFORM_PREFIX=$WORKSPACE/arm-toolchain
 $NDK_ROOT/build/tools/make-standalone-toolchain.sh --platform=android-9 --ndk-dir=$NDK_ROOT --toolchain=arm-linux-androideabi-4.9 --install-dir=$PLATFORM_PREFIX  --stl=gnustl
 export PATH=$PLATFORM_PREFIX/bin:$PATH
 
@@ -274,7 +274,7 @@ make -j2
 make install
 
 ################################################################
-# Install standalone toolchain ARM
+# Install standalone toolchain ARMeabi-v7a
 cd $WORKSPACE
 
 # Setting up new toolchain not required, only difference is CPPFLAGS
