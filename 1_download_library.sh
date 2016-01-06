@@ -17,8 +17,6 @@ else
 	exit
 fi
 
-exit
-
 #Compile toolchain
 #Android SDK
 #Linux
