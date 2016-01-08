@@ -1,5 +1,7 @@
 export WORKSPACE=$PWD
 
+export NDK_ROOT=$WORKSPACE/android-ndk-r10e
+
 # Patch cpufeatures, hangs in Android 4.0.3
 patch -Np0 < cpufeatures.patch
 
@@ -8,7 +10,6 @@ PATH=$PATH:$WORKSPACE/android-ndk-r10e:$WORKSPACE/android-sdk/tools
 
 ####################################################
 # Install standalone toolchain x86
-export NDK_ROOT=$WORKSPACE/android-ndk-r10e
 export PLATFORM_PREFIX=$WORKSPACE/x86-toolchain
 $NDK_ROOT/build/tools/make-standalone-toolchain.sh --platform=android-9 --ndk-dir=$NDK_ROOT --toolchain=x86-4.9 --install-dir=$PLATFORM_PREFIX --stl=gnustl
 
@@ -104,10 +105,12 @@ cd ..
 cd SDL_mixer
 patch -Np1 -d timidity < ../timidity-android.patch
 patch -Np0 < ../sdl-mixer-config.patch
+make clean
 sh autogen.sh
 sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
+#ldconfig NOT FOUND
 make install
 cd ..
 
@@ -132,6 +135,7 @@ export CPPFLAGS="-I$PLATFORM_PREFIX/include -I$NDK_ROOT/sources/cxx-stl/stlport/
 export LDFLAGS="-lc -Wl,-rpath-link=$PLATFORM_PREFIX/lib -L$PLATFORM_PREFIX/lib/"
 
 chmod u+x configure
+make clean
 ./configure --with-cross-build=$ICU_CROSS_BUILD --enable-strict=no  --enable-static --enable-shared=no --enable-tests=no --enable-samples=no --enable-dyload=no --enable-tools=no --enable-extras=no --enable-icuio=no --host=$TARGET_HOST --with-data-packaging=static --prefix=$PLATFORM_PREFIX
 
 make -j2

@@ -17,10 +17,8 @@ export NDK_ROOT=$WORKSPACE/android-ndk-r10e
 export PATH=$PATH:$NDK_ROOT
 
 #export sdk_root
-export SDK_ROOT=WORKSPACE/android-sdk
+export SDK_ROOT=$WORKSPACE/android-sdk
 export PATH=$PATH:$SDK_ROOT/tools:$SDK_ROOT/build-tools/23.0.2/	
-
-export PATH_KEYSTORE=$(pwd)/../easyrpg.keystore
 
 #git clone https://github.com/EasyRPG/Player.git
 
@@ -47,15 +45,15 @@ git pull
 cd $WORKSPACE
 cd builds/android
 # Download of timidity
-#git clone https://github.com/Ghabry/timidity_gus.git assets/timidity
+git clone https://github.com/Ghabry/timidity_gus.git assets/timidity
 
 #Pour connaitre les targets : 
 #android list targets
-android update project --path "." --target 2
+android update project --path "." --target 1
 #ATTENTION : IL FAUT CIBLER L'API 12
 #si on cible la 10 alors il y a un probleme avec la bibliotheque SDL (par rapport au gamepad)
 
-ndk-build
+ndk-build -j3
 ant clean
 ant release
 cd bin
