@@ -1,12 +1,14 @@
 export WORKSPACE=$PWD
 
 export NDK_ROOT=$WORKSPACE/android-ndk-r10e
+export SDK_ROOT=$WORKSPACE/android-sdk
 
 # Patch cpufeatures, hangs in Android 4.0.3
 patch -Np0 < cpufeatures.patch
 
 # Setup PATH
-PATH=$PATH:$WORKSPACE/android-ndk-r10e:$WORKSPACE/android-sdk/tools
+PATH=$PATH:$NDK_ROOT:$SDK_ROOT/tools
+
 
 ####################################################
 # Install standalone toolchain x86
@@ -37,7 +39,6 @@ cd freetype-2.6
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static --with-harfbuzz=no
 make -j2
-# ERROR ??
 make install
 cd ..
 
@@ -75,7 +76,6 @@ patch -Np1 < ../libmad-pkg-config.diff
 autoreconf -fi
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
-#ERROR ? ldconfig: command not found
 make -j2
 make install
 cd ..
@@ -85,7 +85,6 @@ tar xf libmodplug-0.8.8.5.tar.gz
 cd libmodplug-0.8.8.5
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
-#ERROR ? ldconfig: command not found
 make -j2
 make install
 cd ..
@@ -110,7 +109,6 @@ sh autogen.sh
 sh autogen.sh
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --enable-music-mp3-mad-gpl --disable-sdltest --disable-music-mod
 make -j2
-#ldconfig NOT FOUND
 make install
 cd ..
 
