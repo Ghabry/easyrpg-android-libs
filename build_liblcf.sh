@@ -2,7 +2,9 @@
 export WORKSPACE=$PWD
 export NDK_ROOT=$WORKSPACE/android-ndk-r10e
 
-#git clone https://github.com/EasyRPG/liblcf.git
+git clone https://github.com/EasyRPG/liblcf.git
+
+cd liblcf
 
 # x86
 export PLATFORM_PREFIX=$WORKSPACE/x86-toolchain
@@ -57,3 +59,6 @@ export TARGET_HOST="mipsel-linux-android"
 make clean
 make -j2
 make install
+
+
+cd ..

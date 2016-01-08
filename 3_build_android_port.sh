@@ -57,7 +57,7 @@ ndk-build -j3
 ant clean
 ant release
 cd bin
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $PATH_KEYSTORE -storepass $MDP SDLActivity-release-unsigned.apk nightly
+jarsigner -sigalg MD5withRSA -digestalg SHA1 -keystore ~/easyrpg/easyrpg.keystore SDLActivity-release-unsigned.apk nightly
 zipalign 4 SDLActivity-release-unsigned.apk EasyRpgPlayerActivity.apk
 
 cd ../../..
