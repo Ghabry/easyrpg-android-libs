@@ -445,3 +445,5 @@ make clean
 
 make -j2
 make install
+
+cd $WORKSPACE
