@@ -112,7 +112,7 @@ tar xf libmad-0.15.1b.tar.gz
 rm libmad-0.15.1b.tar.gz
 
 # Install libmodplug
-rm -f xf libmodplug-0.8.8.5.tar.gz
+rm -f libmodplug-0.8.8.5.tar.gz
 wget http://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.8.5/libmodplug-0.8.8.5.tar.gz
 tar xf libmodplug-0.8.8.5.tar.gz
 rm xf libmodplug-0.8.8.5.tar.gz
