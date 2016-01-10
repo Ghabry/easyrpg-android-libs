@@ -1,8 +1,3 @@
-#TO complete :
-KEYSTORE_PATH=
-KEYSTORE_PASSWORD=
-
-##
 ./1_download_library.sh
 
 ./2_build_toolchain.sh
