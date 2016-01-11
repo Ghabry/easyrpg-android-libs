@@ -1,6 +1,10 @@
-Android libs for EasyRPG
+Android tools to compile EasyRPG for Android devices
 
-1. Invoke build_android.sh
-2. Set environment variable EASYDEV_ANDROID to this directory (the one where the README is you read)
+1. Open « 4_build_android_port » and give to « KEYSTORE_PATH » and « KEYSTORE_PASSWORD » the value of your keystore’s path and password
+2. Run « 0_build_everything.sh »
+3. Open the Player/builds/android folder with Eclipse
 
-build_lcf.sh and build_player.sh are provided for convenience.
+NB : Complete the mips compilation could cause compilation.
+We advise you to :
+1) git clone https://github.com/EasyRPG/Player.git
+2) desactivate mips compilation (which can cause problem) in « Player/builds/android/jni/Application.mk » in the APP_ABI variable
