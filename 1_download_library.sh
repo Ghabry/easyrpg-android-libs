@@ -11,7 +11,7 @@ if [ $os = $darwin ] ; then
 	brew install autoconf
 elif [ $os = $linux ] ; then
 	echo "Linux detected"
-	sudo apt-get install hg
+	sudo apt-get install mercurial
 	sudo apt-get install autoconf
 else
 	echo "OS not detected"
