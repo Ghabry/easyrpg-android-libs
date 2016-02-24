@@ -5,19 +5,6 @@ os=`uname`
 darwin="Darwin"
 linux="Linux"
 
-if [ $os = $darwin ] ; then
-	echo "Darwin detected"
-	brew install hg
-	brew install autoconf
-elif [ $os = $linux ] ; then
-	echo "Linux detected"
-	sudo apt-get install mercurial
-	sudo apt-get install autoconf
-else
-	echo "OS not detected"
-	exit
-fi
-
 export WORKSPACE=$PWD
 
 #Compile toolchain
