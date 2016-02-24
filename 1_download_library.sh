@@ -9,6 +9,7 @@ if [ $os = $darwin ] ; then
 	echo "Darwin detected"
 	brew install hg
 	brew install autoconf
+fi
 
 export WORKSPACE=$PWD
 
