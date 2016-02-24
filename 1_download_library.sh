@@ -5,6 +5,11 @@ os=`uname`
 darwin="Darwin"
 linux="Linux"
 
+if [ $os = $darwin ] ; then
+	echo "Darwin detected"
+	brew install hg
+	brew install autoconf
+
 export WORKSPACE=$PWD
 
 #Compile toolchain
