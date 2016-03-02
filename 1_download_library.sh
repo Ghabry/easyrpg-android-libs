@@ -76,22 +76,28 @@ tar xf boost_1_60_0.tar.bz2
 rm boost_1_60_0.tar.bz2
 
 # Install libpng
-rm -f libpng-1.6.20.tar.xz
-wget http://prdownloads.sourceforge.net/libpng/libpng-1.6.20.tar.xz
-tar xf libpng-1.6.20.tar.xz
-rm libpng-1.6.20.tar.xz
+rm -f libpng-1.6.21.tar.xz
+wget http://prdownloads.sourceforge.net/libpng/libpng-1.6.21.tar.xz
+tar xf libpng-1.6.21.tar.xz
+rm libpng-1.6.21.tar.xz
 
 # Install freetype
-rm -f freetype-2.6.tar.bz2
-wget http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.bz2
-tar xf freetype-2.6.tar.bz2
-rm freetype-2.6.tar.bz2
+rm -f freetype-2.6.3.tar.bz2
+wget http://download.savannah.gnu.org/releases/freetype/freetype-2.6.3.tar.bz2
+tar xf freetype-2.6.3.tar.bz2
+rm freetype-2.6.3.tar.bz2
+
+# Install harfbuzz
+rm -f harfbuzz-1.2.3.tar.bz2
+wget http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.2.3.tar.bz2
+tar xf harfbuzz-1.2.3.tar.bz2
+rm harfbuzz-1.2.3.tar.bz2
 
 # Install pixman
-rm -f pixman-0.32.8.tar.gz
-wget http://cairographics.org/releases/pixman-0.32.8.tar.gz
-tar xf pixman-0.32.8.tar.gz
-rm pixman-0.32.8.tar.gz
+rm -f pixman-0.34.0.tar.gz
+wget http://cairographics.org/releases/pixman-0.34.0.tar.gz
+tar xf pixman-0.34.0.tar.gz
+rm pixman-0.34.0.tar.gz
 
 # Install libogg
 rm -f libogg-1.3.2.tar.xz
@@ -115,7 +121,7 @@ rm libmad-0.15.1b.tar.gz
 rm -f libmodplug-0.8.8.5.tar.gz
 wget http://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.8.5/libmodplug-0.8.8.5.tar.gz
 tar xf libmodplug-0.8.8.5.tar.gz
-rm xf libmodplug-0.8.8.5.tar.gz
+rm libmodplug-0.8.8.5.tar.gz
 
 # Install SDL2
 hg clone http://hg.libsdl.org/SDL
@@ -128,3 +134,9 @@ rm -f icu4c-56_1-src.tgz
 wget http://download.icu-project.org/files/icu4c/56.1/icu4c-56_1-src.tgz
 tar xf icu4c-56_1-src.tgz
 rm icu4c-56_1-src.tgz
+
+# Install icudata
+rm -f icudata.tar.xz
+wget https://easy-rpg.org/jenkins/job/icudata/lastSuccessfulBuild/artifact/icu/source/data/out/icudata.tar.xz
+tar xf icudata.tar.xz
+rm icudata.tar.xz
