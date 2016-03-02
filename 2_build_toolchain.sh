@@ -27,7 +27,7 @@ export TARGET_HOST="i686-linux-android"
 cp -r boost_1_60_0/boost/ $PLATFORM_PREFIX/include/boost/
 
 # Install libpng
-cd libpng-1.6.20
+cd libpng-1.6.21
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
@@ -35,7 +35,7 @@ make install
 cd ..
 
 # Install freetype
-cd freetype-2.6
+cd freetype-2.6.3
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static --with-harfbuzz=no
 make -j2
@@ -43,7 +43,7 @@ make install
 cd ..
 
 # Install pixman
-cd pixman-0.32.8
+cd pixman-0.34.0
 sed -i.bak 's/SUBDIRS = pixman demos test/SUBDIRS = pixman/' Makefile.am
 autoreconf -fi
 make clean
@@ -160,7 +160,7 @@ export TARGET_HOST="arm-linux-androideabi"
 cp -r boost_1_60_0/boost/ $PLATFORM_PREFIX/include/boost/
 
 # Install libpng
-cd libpng-1.6.20
+cd libpng-1.6.21
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
@@ -168,7 +168,7 @@ make install
 cd ..
 
 # Install freetype
-cd freetype-2.6
+cd freetype-2.6.3
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static --with-harfbuzz=no
 make -j2
@@ -176,7 +176,7 @@ make install
 cd ..
 
 # Install pixman
-cd pixman-0.32.8
+cd pixman-0.34.0
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
@@ -262,7 +262,7 @@ mkdir $PLATFORM_PREFIX/include
 cp -r boost_1_60_0/boost/ $PLATFORM_PREFIX/include/boost/
 
 # Install libpng
-cd libpng-1.6.20
+cd libpng-1.6.21
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
@@ -270,7 +270,7 @@ make install
 cd ..
 
 # Install freetype
-cd freetype-2.6
+cd freetype-2.6.3
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static --with-harfbuzz=no
 make -j2
@@ -278,7 +278,7 @@ make install
 cd ..
 
 # Install pixman
-cd pixman-0.32.8
+cd pixman-0.34.0
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
@@ -363,7 +363,7 @@ export TARGET_HOST="mipsel-linux-android"
 cp -r boost_1_60_0/boost/ $PLATFORM_PREFIX/include/boost/
 
 # Install libpng
-cd libpng-1.6.20
+cd libpng-1.6.21
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
@@ -371,7 +371,7 @@ make install
 cd ..
 
 # Install freetype
-cd freetype-2.6
+cd freetype-2.6.3
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static --with-harfbuzz=no
 make -j2
@@ -379,7 +379,7 @@ make install
 cd ..
 
 # Install pixman
-cd pixman-0.32.8
+cd pixman-0.34.0
 make clean
 ./configure --host=$TARGET_HOST --prefix=$PLATFORM_PREFIX --disable-shared --enable-static
 make -j2
